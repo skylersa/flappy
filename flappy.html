@@ -83,6 +83,10 @@ function key_down(evt) {
   if (evt.keyCode == 83) {
   	bird_speed_y = 1;
   }
+  if (evt.keyCode == 88) {
+  	bird_speed_y = 0;
+  	bird_speed_x = 0;
+  }
 }
 
 function as_color(r, g, b) {
