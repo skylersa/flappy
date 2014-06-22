@@ -1,9 +1,25 @@
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <style type="text/css">
 	* {
 		font-family: monospace;
+	}
+	html, body {
+		padding: 0px;
+		margin: 0px;
+		height: 100%;
+	}
+	html {
+		border: 1px dotted #aaf;
+	}
+	body {
+		border: 1px dotted #faa;
+	}
+	#bird {
+		color: blue;
+		position: absolute;
 	}
 </style>
 </head>
@@ -44,6 +60,8 @@ function step() {
 
 	var bird_frame = Math.round((frame_count * BIRD_FLAP_SPEED)) % BIRD.length;
 	bird.innerText = BIRD[bird_frame]
+	bird.style.left = "50px";
+	bird.style.top = "100px";
 }
 </script>
 </body>
