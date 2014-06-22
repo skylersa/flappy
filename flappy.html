@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+	* {
+		font-family: monospace;
+	}
+</style>
+</head>
+<body onload="step()">
+  <div id="bird">\=#=/</div>
+
+
+<script type="text/javascript">
+var BIRD = [
+  "\\_∞_/",
+  "--∞--",
+  "/^∞^\\",
+  "--∞--",
+]
+var last_frame_time = getTimeMillis();
+var frame_count = 0;
+var BIRD_FLAP_SPEED = .15
+var delta_time = 0;
+
+function getTimeMillis() {
+  return new Date().getTime();
+}
+
+function do_frame_math() {
+  var current_frame_time = getTimeMillis();
+  delta_time = current_frame_time - last_frame_time
+  last_frame_time = current_frame_time
+
+  frame_count++
+}
+
+function step() {
+	requestAnimationFrame(step)
+	do_frame_math();
+
+	var bird = document.getElementById("bird");
+	// console.log(bird)
+
+	var bird_frame = Math.round((frame_count * BIRD_FLAP_SPEED)) % BIRD.length;
+	bird.innerText = BIRD[bird_frame]
+}
+</script>
+</body>
+</html>
