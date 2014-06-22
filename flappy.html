@@ -41,11 +41,15 @@
 
 
 <script type="text/javascript">
+
 var BIRD = [
   "\\_∞_/",
   "--∞--",
   "/^∞^\\",
   "--∞--",
+];
+var BIRD_ADJUST_Y = [
+  -1, 0, 2, 0
 ];
 
 var POOP = [
@@ -118,6 +122,7 @@ function key_down(evt) {
   if (evt.keyCode == 65) {
   	bird_speed_x = -1;
   }
+
   if (evt.keyCode == 68) {
   	bird_speed_x = 1;
   }
@@ -129,6 +134,7 @@ function key_down(evt) {
   if (evt.keyCode == 83) {
   	bird_speed_y = 1;
   }
+
   if (evt.keyCode == 88) {
   	bird_speed_y = 0;
   	bird_speed_x = 0;
@@ -160,7 +166,7 @@ function step() {
   bird_y += bird_speed_y;
 	bird.innerText = BIRD[bird_frame];
 	bird.style.left = bird_x + "px";
-	bird.style.top = bird_y + "px";
+	bird.style.top = (bird_y + BIRD_ADJUST_Y[bird_frame]) + "px";
 	bird.style.color = random_color();
 
   poop_x += poop_speed_x;
