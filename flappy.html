@@ -98,6 +98,9 @@ var poop_y = 200;
 var poop_speed_x = 0;
 var poop_speed_y = 0;
 
+var city_x;
+var city_y;
+
 var bird;
 var poop;
 var city;
@@ -120,9 +123,8 @@ function start() {
   center(poop);
   center(city);
 
-  var city_left = Math.random() * window.innerWidth;
-  city.style.bottom = "0px";
-  city.style.left = city_left + "px";
+  city_x = Math.random() * window.innerWidth;
+  city_y = window.innerHeight;
 }
 
 function center(elem) {
@@ -237,6 +239,22 @@ function step() {
 	poop.innerText = POOP[poop_frame];
 	poop.style.left = poop_x + "px";
 	poop.style.top = poop_y + "px";
+
+  city.style.left = city_x + "px";
+  city.style.top = city_y + "px";
+
+	check_collisions();
+}
+
+function collision(p1, w1, p2, w2) {
+  return (p1 + w1 / 2) > (p2 - w2 / 2) && (p1 - w1 / 2) < (p2 + w2 / 2);
+}
+
+function check_collisions() {
+  if (collision(poop_x, poop.offsetWidth, city_x, city.offsetWidth)
+  && collision(poop_y, poop.offsetHeight, city_y, city.offsetHeight)) {
+    city_x = Math.random() * window.innerWidth;
+  }
 }
 </script>
 </body>
