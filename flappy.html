@@ -41,6 +41,7 @@ var delta_time = 0;
 var bird_x = 200;
 var bird_y = 200;
 var bird_speed_x = 0;
+var bird_speed_y = 1;
 
 window.addEventListener("load", start);
 
@@ -74,6 +75,10 @@ function key_down(evt) {
   if (evt.keyCode == 68) {
   	bird_speed_x = 1;
   }
+
+  if (evt.keyCode == 87) {
+  	bird_speed_y = -1;
+  }
 }
 
 function step() {
@@ -85,6 +90,8 @@ function step() {
 
 	var bird_frame = Math.round((frame_count * BIRD_FLAP_SPEED)) % BIRD.length;
   bird_x += bird_speed_x;
+  bird_y += bird_speed_y;
+
 
 	bird.innerText = BIRD[bird_frame];
 	bird.style.left = bird_x + "px";
