@@ -35,11 +35,32 @@
 	#poop {
 		color: black;
 	}
+
+	#city {
+		font-size: 1.5em;
+		color: green;
+	}
+
+	#rainbow {
+		font-size: 80em;
+		color: #eed;
+	}
+
+	#moon {
+		color: green;
+		font-size: 10em;
+		top: 3%;
+		right: 5%;
+	}
 </style>
 </head>
 <body>
+<div id="moon">❍</div>
+<div id="rainbow">❍</div>
+
 <div id="bird">bird</div>
 <div id="poop">poop</div>
+<div id="city">❮❈❯</div>
 
 
 <script type="text/javascript">
@@ -79,7 +100,7 @@ var poop_speed_y = 0;
 
 var bird;
 var poop;
-
+var city;
 
 window.addEventListener("load", start);
 
@@ -91,11 +112,17 @@ function start() {
 
 	bird = document.getElementById("bird");
   poop = document.getElementById("poop");
+  city = document.getElementById("city");
   bird.innerText = BIRD[0];
   poop.innerText = POOP[0];
 
   center(bird);
   center(poop);
+  center(city);
+
+  var city_left = Math.random() * window.innerWidth;
+  city.style.bottom = "0px";
+  city.style.left = city_left + "px";
 }
 
 function center(elem) {
