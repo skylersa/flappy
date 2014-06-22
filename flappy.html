@@ -19,10 +19,12 @@
 
 	BODY {
 		border: 1px dotted #faa;
+		overflow: hidden;
 	}
 
 	DIV {
 		position: absolute;
+		white-space: nowrap;
 		/*border: 1px dashed red;*/
 	}
 
@@ -97,7 +99,6 @@ function start() {
 }
 
 function center(elem) {
-	console.log(elem.offsetWidth, elem.offsetHeight)
 	elem.style.marginLeft = "-" + (elem.offsetWidth/2) + "px";
 	elem.style.marginTop = "-" + (elem.offsetHeight/2) + "px";
 }
@@ -169,6 +170,22 @@ function step() {
 
   bird_x += bird_speed_x;
   bird_y += bird_speed_y;
+
+  if (bird_x < 0) {
+  	bird_speed_x = 1;
+  }
+
+  if (bird_y > window.innerHeight) {
+  	 bird_speed_y = -1;
+  }
+
+  if (bird_y < 0) {
+  	bird_speed_y =1
+  }
+
+  if (bird_x > window.innerWidth) {
+  	bird_speed_x = -1;
+  }
 	bird.innerText = BIRD[bird_frame];
 	bird.style.left = bird_x + "px";
 	bird.style.top = (bird_y + BIRD_ADJUST_Y[bird_frame]) + "px";
