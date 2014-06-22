@@ -78,6 +78,7 @@ var poop_speed_y = 0;
 var bird;
 var poop;
 
+
 window.addEventListener("load", start);
 
 function start() {
@@ -173,8 +174,13 @@ function step() {
 	bird.style.top = (bird_y + BIRD_ADJUST_Y[bird_frame]) + "px";
 	bird.style.color = random_color();
 
-  poop_x += poop_speed_x;
-  poop_y += poop_speed_y;
+  if (poop_speed_y == 0) {
+	  poop_x = bird_x;
+  	poop_y = bird_y;
+  } else {
+	  poop_x += poop_speed_x;
+	  poop_y += poop_speed_y;
+  }
 	poop.innerText = POOP[poop_frame];
 	poop.style.left = poop_x + "px";
 	poop.style.top = poop_y + "px";
