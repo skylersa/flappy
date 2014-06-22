@@ -23,6 +23,7 @@
 
 	DIV {
 		position: absolute;
+		/*border: 1px dashed red;*/
 	}
 
 	#bird {
@@ -35,8 +36,8 @@
 </style>
 </head>
 <body>
-  <div id="bird">bird</div>
-  <div id="poop">poop</div>
+<div id="bird">bird</div>
+<div id="poop">poop</div>
 
 
 <script type="text/javascript">
@@ -70,12 +71,30 @@ var poop_y = 200;
 var poop_speed_x = 0;
 var poop_speed_y = 1;
 
+var bird;
+var poop;
+
 window.addEventListener("load", start);
 
 function start() {
 	requestAnimationFrame(step);
+
   window.addEventListener("keydown", key_down);
   window.addEventListener("keyup", key_up);
+
+	bird = document.getElementById("bird");
+  poop = document.getElementById("poop");
+  bird.innerText = BIRD[0];
+  poop.innerText = POOP[0];
+
+  center(bird);
+  center(poop);
+}
+
+function center(elem) {
+	console.log(elem.offsetWidth, elem.offsetHeight)
+	elem.style.marginLeft = "-" + (elem.offsetWidth/2) + "px";
+	elem.style.marginTop = "-" + (elem.offsetHeight/2) + "px";
 }
 
 function getTimeMillis() {
@@ -133,9 +152,6 @@ function random_color() {
 function step() {
 	requestAnimationFrame(step);
 	do_frame_math();
-
-	var bird = document.getElementById("bird");
-	var poop = document.getElementById("poop");
 
 	var bird_frame = Math.round((frame_count * BIRD_FRAME_RATE)) % BIRD.length;
 	var poop_frame = Math.round((frame_count * POOP_FRAME_RATE)) % POOP.length;
