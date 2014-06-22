@@ -57,6 +57,7 @@
 <body>
 <div id="moon">❍</div>
 <div id="rainbow">❍</div>
+<div id="score">----</div>
 
 <div id="bird">bird</div>
 <div id="poop">poop</div>
@@ -82,6 +83,7 @@ var POOP = [
 	"o",
 ];
 
+var game_score = 0;
 var last_frame_time = getTimeMillis();
 var frame_count = 0;
 var BIRD_FRAME_RATE = .15;
@@ -104,6 +106,7 @@ var city_y;
 var bird;
 var poop;
 var city;
+var score;
 
 window.addEventListener("load", start);
 
@@ -116,6 +119,7 @@ function start() {
 	bird = document.getElementById("bird");
   poop = document.getElementById("poop");
   city = document.getElementById("city");
+  score = document.getElementById("score");
   bird.innerText = BIRD[0];
   poop.innerText = POOP[0];
 
@@ -245,6 +249,8 @@ function step() {
   city.style.left = city_x + "px";
   city.style.top = city_y + "px";
 
+  score.innerText = "score: " + game_score;
+
 	check_collisions();
 }
 
@@ -256,6 +262,7 @@ function check_collisions() {
   if (collision(poop_x, poop.offsetWidth, city_x, city.offsetWidth)
   && collision(poop_y, poop.offsetHeight, city_y, city.offsetHeight)) {
     city_x = Math.random() * window.innerWidth;
+  	game_score = game_score + 1;
   }
 }
 </script>
