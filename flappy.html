@@ -229,6 +229,10 @@ function step() {
   } else {
 	  poop_x += poop_speed_x;
 	  poop_y += poop_speed_y;
+	  poop_speed_x *= 0.993;
+	  if (poop_speed_x < .1) {
+	  	poop_speed_x = 0;
+	  }
   }
 	poop.innerText = POOP[poop_frame];
 	poop.style.left = poop_x + "px";
