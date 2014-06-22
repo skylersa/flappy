@@ -41,7 +41,7 @@ var delta_time = 0;
 var bird_x = 200;
 var bird_y = 200;
 var bird_speed_x = 0;
-var bird_speed_y = 1;
+var bird_speed_y = 0;
 
 window.addEventListener("load", start);
 
@@ -79,6 +79,24 @@ function key_down(evt) {
   if (evt.keyCode == 87) {
   	bird_speed_y = -1;
   }
+
+  if (evt.keyCode == 83) {
+  	bird_speed_y = 1;
+  }
+}
+
+function as_color(r, g, b) {
+	r = Math.round(r);
+	g = Math.round(g);
+	b = Math.round(b);
+  return "#"+(r).toString(16)+(g).toString(16)+(b).toString(16);
+}
+
+function random_color() {
+	var r = Math.random() * 255;
+	var g = Math.random() * 255;
+	var b = Math.random() * 255;
+	return as_color(r, g, b);
 }
 
 function step() {
@@ -96,6 +114,7 @@ function step() {
 	bird.innerText = BIRD[bird_frame];
 	bird.style.left = bird_x + "px";
 	bird.style.top = bird_y + "px";
+	bird.style.color = random_color();
 }
 </script>
 </body>
