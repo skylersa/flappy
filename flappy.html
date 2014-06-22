@@ -214,6 +214,8 @@ function step() {
 
   if (poop_y > window.innerHeight) {
   	poop_speed_y = 0;
+  	poop_x = bird_x;
+  	poop_y = bird_y;
   }
 
   if (bird_x > window.innerWidth) {
