@@ -183,6 +183,10 @@ function step() {
   	bird_speed_y =1
   }
 
+  if (poop_y > window.innerHeight) {
+  	poop_speed_y = 0;
+  }
+
   if (bird_x > window.innerWidth) {
   	bird_speed_x = -1;
   }
@@ -191,9 +195,10 @@ function step() {
 	bird.style.top = (bird_y + BIRD_ADJUST_Y[bird_frame]) + "px";
 	bird.style.color = random_color();
 
-  if (poop_speed_y == 0) {
+  if (poop_speed_y == 0 && poop_y < window.innerHeight) {
 	  poop_x = bird_x;
   	poop_y = bird_y;
+  	poop_speed_x = bird_speed_x;
   } else {
 	  poop_x += poop_speed_x;
 	  poop_y += poop_speed_y;
