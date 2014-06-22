@@ -6,25 +6,37 @@
 	* {
 		font-family: monospace;
 	}
+
 	html, body {
 		padding: 0px;
 		margin: 0px;
 		height: 100%;
 	}
-	html {
+
+	HTML {
 		border: 1px dotted #aaf;
 	}
-	body {
+
+	BODY {
 		border: 1px dotted #faa;
 	}
+
+	DIV {
+		position: absolute;
+	}
+
 	#bird {
 		color: blue;
-		position: absolute;
+	}
+
+	#poop {
+		color: black;
 	}
 </style>
 </head>
 <body>
-  <div id="bird">\=#=/</div>
+  <div id="bird">bird</div>
+  <div id="poop">poop</div>
 
 
 <script type="text/javascript">
@@ -33,15 +45,30 @@ var BIRD = [
   "--∞--",
   "/^∞^\\",
   "--∞--",
-]
+];
+
+var POOP = [
+	".",
+	"o",
+	"O",
+	"o",
+];
+
 var last_frame_time = getTimeMillis();
 var frame_count = 0;
-var BIRD_FLAP_SPEED = .15
+var BIRD_FRAME_RATE = .15;
+var POOP_FRAME_RATE = .15;
 var delta_time = 0;
+
 var bird_x = 200;
 var bird_y = 200;
 var bird_speed_x = 0;
 var bird_speed_y = 0;
+
+var poop_x = 200;
+var poop_y = 200;
+var poop_speed_x = 0;
+var poop_speed_y = 1;
 
 window.addEventListener("load", start);
 
@@ -108,17 +135,23 @@ function step() {
 	do_frame_math();
 
 	var bird = document.getElementById("bird");
-	// console.log(bird)
+	var poop = document.getElementById("poop");
 
-	var bird_frame = Math.round((frame_count * BIRD_FLAP_SPEED)) % BIRD.length;
+	var bird_frame = Math.round((frame_count * BIRD_FRAME_RATE)) % BIRD.length;
+	var poop_frame = Math.round((frame_count * POOP_FRAME_RATE)) % POOP.length;
+
   bird_x += bird_speed_x;
   bird_y += bird_speed_y;
-
-
 	bird.innerText = BIRD[bird_frame];
 	bird.style.left = bird_x + "px";
 	bird.style.top = bird_y + "px";
 	bird.style.color = random_color();
+
+  poop_x += poop_speed_x;
+  poop_y += poop_speed_y;
+	poop.innerText = POOP[poop_frame];
+	poop.style.left = poop_x + "px";
+	poop.style.top = poop_y + "px";
 }
 </script>
 </body>
