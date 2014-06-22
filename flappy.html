@@ -73,7 +73,7 @@ var bird_speed_y = 0;
 var poop_x = 200;
 var poop_y = 200;
 var poop_speed_x = 0;
-var poop_speed_y = 1;
+var poop_speed_y = 0;
 
 var bird;
 var poop;
@@ -138,6 +138,10 @@ function key_down(evt) {
   if (evt.keyCode == 88) {
   	bird_speed_y = 0;
   	bird_speed_x = 0;
+  }
+
+  if (evt.keyCode == 32) {
+  	poop_speed_y = 1;
   }
 }
 
