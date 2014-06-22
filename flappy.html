@@ -23,7 +23,7 @@
 	}
 </style>
 </head>
-<body onload="step()">
+<body>
   <div id="bird">\=#=/</div>
 
 
@@ -38,6 +38,17 @@ var last_frame_time = getTimeMillis();
 var frame_count = 0;
 var BIRD_FLAP_SPEED = .15
 var delta_time = 0;
+var bird_x = 200;
+var bird_y = 200;
+var bird_speed_x = 0;
+
+window.addEventListener("load", start);
+
+function start() {
+	requestAnimationFrame(step);
+  window.addEventListener("keydown", key_down);
+  window.addEventListener("keyup", key_up);
+}
 
 function getTimeMillis() {
   return new Date().getTime();
@@ -45,23 +56,39 @@ function getTimeMillis() {
 
 function do_frame_math() {
   var current_frame_time = getTimeMillis();
-  delta_time = current_frame_time - last_frame_time
-  last_frame_time = current_frame_time
+  delta_time = current_frame_time - last_frame_time;
+  last_frame_time = current_frame_time;
 
-  frame_count++
+  frame_count++;
+}
+
+function key_up(evt) {
+
+}
+
+function key_down(evt) {
+  console.log(evt.keyCode);
+  if (evt.keyCode == 65) {
+  	bird_speed_x = -1;
+  }
+  if (evt.keyCode == 68) {
+  	bird_speed_x = 1;
+  }
 }
 
 function step() {
-	requestAnimationFrame(step)
+	requestAnimationFrame(step);
 	do_frame_math();
 
 	var bird = document.getElementById("bird");
 	// console.log(bird)
 
 	var bird_frame = Math.round((frame_count * BIRD_FLAP_SPEED)) % BIRD.length;
-	bird.innerText = BIRD[bird_frame]
-	bird.style.left = "50px";
-	bird.style.top = "100px";
+  bird_x += bird_speed_x;
+
+	bird.innerText = BIRD[bird_frame];
+	bird.style.left = bird_x + "px";
+	bird.style.top = bird_y + "px";
 }
 </script>
 </body>
