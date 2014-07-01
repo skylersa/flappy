@@ -15,6 +15,12 @@ var POOP = [
   "o",
 ];
 
+var KEY_CODE_LEFT = 37;
+var KEY_CODE_UP = 38;
+var KEY_CODE_RIGHT = 39;
+var KEY_CODE_DOWN = 40;
+
+
 var game_score = 0;
 var last_frame_time = getTimeMillis();
 var frame_count = 0;
@@ -95,19 +101,19 @@ function ord(chr) {
 
 function key_down(evt) {
   console.log(evt.keyCode);
-  if (evt.keyCode == ord('A')) {
+  if (evt.keyCode == ord('A') || evt.keyCode == KEY_CODE_LEFT) {
     bird_speed_x = -1;
   }
 
-  if (evt.keyCode == ord('D')) {
+  if (evt.keyCode == ord('D') || evt.keyCode == KEY_CODE_RIGHT) {
     bird_speed_x = 1;
   }
 
-  if (evt.keyCode == ord('W')) {
+  if (evt.keyCode == ord('W') || evt.keyCode == KEY_CODE_UP) {
     bird_speed_y = -1;
   }
 
-  if (evt.keyCode == ord('S')) {
+  if (evt.keyCode == ord('S') || evt.keyCode == KEY_CODE_DOWN) {
     bird_speed_y = 1;
   }
 
