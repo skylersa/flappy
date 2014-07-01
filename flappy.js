@@ -47,6 +47,7 @@ function start() {
 
   window.addEventListener("keydown", key_down);
   window.addEventListener("keyup", key_up);
+  window.addEventListener("resize", resize);
 
   bird = document.getElementById("bird");
   poop = document.getElementById("poop");
@@ -59,6 +60,10 @@ function start() {
   center(poop);
   center(city);
 
+  resize();
+}
+
+function resize() {
   city_x = Math.random() * window.innerWidth;
   city_y = window.innerHeight;
 }
