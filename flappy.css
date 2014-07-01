@@ -1,0 +1,52 @@
+* {
+  font-family: monospace;
+}
+
+html, body {
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+}
+
+HTML {
+  border: 1px dotted #aaf;
+}
+
+BODY {
+  border: 1px dotted #faa;
+  overflow: hidden;
+}
+
+DIV {
+  position: absolute;
+  white-space: nowrap;
+  /*border: 1px dashed red;*/
+}
+
+#bird {
+  color: blue;
+}
+
+#poop {
+  color: black;
+}
+
+#city {
+  font-size: 1.5em;
+  color: green;
+}
+
+#rainbow {
+  font-size: 80em;
+  color: #eed;
+  bottom: -0.7em;
+  left: 0px;
+  overflow: hidden;
+}
+
+#moon {
+  color: green;
+  font-size: 10em;
+  top: 3%;
+  right: 5%;
+}
