@@ -89,30 +89,34 @@ function key_up(evt) {
 
 }
 
+function ord(chr) {
+  return chr.charCodeAt(0);
+}
+
 function key_down(evt) {
   console.log(evt.keyCode);
-  if (evt.keyCode == 65) {
+  if (evt.keyCode == ord('A')) {
     bird_speed_x = -1;
   }
 
-  if (evt.keyCode == 68) {
+  if (evt.keyCode == ord('D')) {
     bird_speed_x = 1;
   }
 
-  if (evt.keyCode == 87) {
+  if (evt.keyCode == ord('W')) {
     bird_speed_y = -1;
   }
 
-  if (evt.keyCode == 83) {
+  if (evt.keyCode == ord('S')) {
     bird_speed_y = 1;
   }
 
-  if (evt.keyCode == 88) {
+  if (evt.keyCode == ord('X')) {
     bird_speed_y = 0;
     bird_speed_x = 0;
   }
 
-  if (evt.keyCode == 32) {
+  if (evt.keyCode == ord(' ')) {
     poop_speed_y = 1;
   }
 }
