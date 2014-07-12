@@ -22,6 +22,7 @@ var KEY_CODE_DOWN = 40;
 
 
 var game_score = 0;
+var game_lives = 5
 var last_frame_time = getTimeMillis();
 var frame_count = 0;
 var BIRD_FRAME_RATE = .15;
@@ -142,7 +143,11 @@ function random_color() {
 }
 
 function step() {
-  requestAnimationFrame(step);
+  if (game_lives > 0) {
+    requestAnimationFrame(step);
+  } else {
+    gameover.style.visibility = "visible";
+  }
   do_frame_math();
 
   var bird_frame = Math.round((frame_count * BIRD_FRAME_RATE)) % BIRD.length;
@@ -172,6 +177,7 @@ function step() {
   if (bird_x > window.innerWidth) {
     bird_speed_x = -1;
   }
+
   bird.innerText = BIRD[bird_frame];
   bird.style.left = bird_x + "px";
   bird.style.top = (bird_y + BIRD_ADJUST_Y[bird_frame]) + "px";
@@ -197,6 +203,7 @@ function step() {
   city.style.top = city_y + "px";
 
   score.innerText = "score: " + game_score;
+  lives.innerText = "lives: " + game_lives;
 
   check_collisions();
 }
@@ -210,5 +217,10 @@ function check_collisions() {
   && collision(poop_y, poop.offsetHeight, city_y, city.offsetHeight)) {
     city_x = Math.random() * window.innerWidth;
     game_score = game_score + 1;
+  }
+  if (collision(bird_x, bird.offsetWidth, city_x, city.offsetWidth)
+  && collision(bird_y, bird.offsetHeight, city_y, city.offsetHeight)) {
+    city_x = Math.random() * window.innerWidth;
+    game_lives = game_lives - 1;
   }
 }
