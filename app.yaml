@@ -12,3 +12,7 @@ handlers:
 - url: /
   static_files: flappy.html
   upload: flappy.html
+
+- url: /(.*)
+  static_files: \1
+  upload: .*

@@ -47,10 +47,18 @@ var poop;
 var city;
 var score;
 
+var context = new AudioContext();
+var laser_buffer;
+var bgbeat_buffer;
+
 window.addEventListener("load", start);
 
 function start() {
   requestAnimationFrame(step);
+
+  load_sounds(context, function() {
+    play_sound(bgbeat_buffer, true);
+  });
 
   window.addEventListener("keydown", key_down);
   window.addEventListener("keyup", key_up);
@@ -101,7 +109,7 @@ function ord(chr) {
 }
 
 function key_down(evt) {
-  console.log(evt.keyCode);
+  // console.log(evt.keyCode);
   if (evt.keyCode == ord('A') || evt.keyCode == KEY_CODE_LEFT) {
     bird_speed_x = -1;
   }
@@ -124,7 +132,10 @@ function key_down(evt) {
   }
 
   if (evt.keyCode == ord(' ')) {
-    poop_speed_y = 1;
+    if (poop_speed_y == 0) {
+      poop_speed_y = 1;
+      play_sound(laser_buffer, false);
+    }
   }
 }
 
@@ -223,4 +234,33 @@ function check_collisions() {
     city_x = Math.random() * window.innerWidth;
     game_lives = game_lives - 1;
   }
+}
+
+function load_sounds(context, finishedLoading) {
+  bufferLoader = new BufferLoader(
+    context,
+    [
+      //http://www.freesound.org/people/oceanictrancer/sounds/242577/
+      '242577__oceanictrancer__120-bpm-ravish-loop.wav',
+
+      // http://www.freesound.org/people/jobro/sounds/35684/
+      '35684__jobro__laser7.wav',
+    ],
+    function (bufferList) {
+      bgbeat_buffer = bufferList[0];
+      laser_buffer = bufferList[1];
+      finishedLoading();
+    }
+    );
+
+  bufferLoader.load();
+}
+
+function play_sound(buffer, loop) {
+  console.log('buffer', buffer);
+  var source = context.createBufferSource();
+  source.buffer = buffer;
+  source.loop = loop;
+  source.connect(context.destination);
+  source.start(0);
 }
