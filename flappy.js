@@ -29,7 +29,7 @@ var BIRD_FRAME_RATE = .15;
 var POOP_FRAME_RATE = .15;
 var delta_time = 0;
 
-var bird_x = 200;
+var bird_x = 0;
 var bird_y = 200;
 var bird_speed_x = 0;
 var bird_speed_y = 0;
@@ -166,6 +166,8 @@ function step() {
 
   bird_x += bird_speed_x;
   bird_y += bird_speed_y;
+
+  rainbow_right.style.marginLeft = (bird_x)+ "px";
 
   if (bird_x < 0) {
     bird_speed_x = 1;

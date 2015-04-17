@@ -36,7 +36,7 @@ DIV {
   color: green;
 }
 
-#rainbow {
+.rainbow {
   font-size: 80em;
   color: #eed;
   bottom: -0.7em;
@@ -60,3 +60,16 @@ DIV {
   left: 50%;
   visibility: hidden;
 }
+
+.left , .right {
+  opacity: 0.5;
+}
+
+.left {
+  color: #f00;
+}
+
+.right {
+  color: #0ff;
+}
+
