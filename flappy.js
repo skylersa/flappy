@@ -15,6 +15,8 @@ var POOP = [
   "o",
 ];
 
+var MAXPOOPCOUNT = 20;
+
 var KEY_CODE_LEFT = 37;
 var KEY_CODE_UP = 38;
 var KEY_CODE_RIGHT = 39;
@@ -34,16 +36,17 @@ var bird_y = 200;
 var bird_speed_x = 0;
 var bird_speed_y = 0;
 
-var poop_x = 200;
-var poop_y = 200;
-var poop_speed_x = 0;
-var poop_speed_y = 0;
+var poop = new Array(MAXPOOPCOUNT);
+var poop_x = new Array(MAXPOOPCOUNT);
+var poop_y = new Array(MAXPOOPCOUNT);
+var poop_speed_x = new Array(MAXPOOPCOUNT);
+var poop_speed_y = new Array(MAXPOOPCOUNT);
+
 
 var city_x;
 var city_y;
 
 var bird;
-var poop;
 var city;
 var score;
 
@@ -65,15 +68,24 @@ function start() {
   window.addEventListener("resize", resize);
 
   bird = document.getElementById("bird");
-  poop = document.getElementById("poop");
-  city = document.getElementById("city");
-  score = document.getElementById("score");
   bird.innerText = BIRD[0];
-  poop.innerText = POOP[0];
-
   center(bird);
-  center(poop);
+
+  city = document.getElementById("city");
   center(city);
+
+  score = document.getElementById("score");
+
+  for (i = 0; i < MAXPOOPCOUNT; i++) {
+    poop[i] = document.createElement("div");
+    poop[i].innerText = POOP[0];
+    document.body.appendChild(poop[i]);
+    center(poop[i]);
+    poop_x[i] = 0;
+    poop_y[i] = 0;
+    poop_speed_x[i] = 0;
+    poop_speed_y[i] = 0;
+  }
 
   resize();
 }
@@ -132,9 +144,12 @@ function key_down(evt) {
   }
 
   if (evt.keyCode == ord(' ')) {
-    if (poop_speed_y == 0) {
-      poop_speed_y = 1;
-      play_sound(laser_buffer, false);
+    for (i = 0; i < MAXPOOPCOUNT; i++) {
+      if (poop_speed_y[i] == 0) {
+        poop_speed_y[i] = 1;
+        play_sound(laser_buffer, false);
+        break;
+      }
     }
   }
 }
@@ -173,22 +188,16 @@ function step() {
     bird_speed_x = 1;
   }
 
-  if (bird_y > window.innerHeight) {
-     bird_speed_y = -1;
-  }
-
   if (bird_y < 0) {
     bird_speed_y =1
   }
 
-  if (poop_y > window.innerHeight) {
-    poop_speed_y = 0;
-    poop_x = bird_x;
-    poop_y = bird_y;
-  }
-
   if (bird_x > window.innerWidth) {
     bird_speed_x = -1;
+  }
+
+  if (bird_y > window.innerHeight) {
+     bird_speed_y = -1;
   }
 
   bird.innerText = BIRD[bird_frame];
@@ -196,21 +205,29 @@ function step() {
   bird.style.top = (bird_y + BIRD_ADJUST_Y[bird_frame]) + "px";
   bird.style.color = random_color();
 
-  if (poop_speed_y == 0 && poop_y < window.innerHeight) {
-    poop_x = bird_x;
-    poop_y = bird_y;
-    poop_speed_x = bird_speed_x;
-  } else {
-    poop_x += poop_speed_x;
-    poop_y += poop_speed_y;
-    poop_speed_x *= 0.993;
-    if (poop_speed_x < .1) {
-      poop_speed_x = 0;
+  for (i = 0; i < MAXPOOPCOUNT; i++) {
+    if (poop_y[i] > window.innerHeight) {
+      poop_speed_y[i] = 0;
+      poop_x[i] = bird_x;
+      poop_y[i] = bird_y;
     }
+
+    if (poop_speed_y[i] == 0 && poop_y[i] < window.innerHeight) {
+      poop_x[i] = bird_x;
+      poop_y[i] = bird_y;
+      poop_speed_x[i] = bird_speed_x;
+    } else {
+      poop_x[i] += poop_speed_x[i];
+      poop_y[i] += poop_speed_y[i];
+      poop_speed_x[i] *= 0.993;
+      if (poop_speed_x[i] < .1) {
+        poop_speed_x[i] = 0;
+      }
+    }
+    poop[i].innerText = POOP[poop_frame];
+    poop[i].style.left = poop_x[i] + "px";
+    poop[i].style.top = poop_y[i] + "px";
   }
-  poop.innerText = POOP[poop_frame];
-  poop.style.left = poop_x + "px";
-  poop.style.top = poop_y + "px";
 
   city.style.left = city_x + "px";
   city.style.top = city_y + "px";
@@ -226,10 +243,12 @@ function collision(p1, w1, p2, w2) {
 }
 
 function check_collisions() {
-  if (collision(poop_x, poop.offsetWidth, city_x, city.offsetWidth)
-  && collision(poop_y, poop.offsetHeight, city_y, city.offsetHeight)) {
-    city_x = Math.random() * window.innerWidth;
-    game_score = game_score + 1;
+  for (i = 0; i < MAXPOOPCOUNT; i++) {
+    if (collision(poop_x[i], poop[i].offsetWidth, city_x, city.offsetWidth)
+    && collision(poop_y[i], poop[i].offsetHeight, city_y, city.offsetHeight)) {
+      city_x = Math.random() * window.innerWidth;
+      game_score = game_score + 1;
+    }
   }
   if (collision(bird_x, bird.offsetWidth, city_x, city.offsetWidth)
   && collision(bird_y, bird.offsetHeight, city_y, city.offsetHeight)) {
@@ -259,7 +278,6 @@ function load_sounds(context, finishedLoading) {
 }
 
 function play_sound(buffer, loop) {
-  console.log('buffer', buffer);
   var source = context.createBufferSource();
   source.buffer = buffer;
   source.loop = loop;
